@@ -33,6 +33,12 @@ class vehicle(models.Model):
             if vals["name"]:
                 fields_name =fields_name,"name,"
                 fields_value=fields_value,"'",vals["name"],"',"
-                
-        #print(sql)        
+            if vals["uniqueid"]:
+                fields_name =fields_name,"uniqueid,"
+                fields_value=fields_value,"'",vals["uniqueid"],"',"
+            if fields_name:
+                sql="INSERT INTO tc_devices (", fields_name ,") VALUES (",fields_value,")"
+                print(sql)                     
+                #nov 18  sep 18 ene 19                 
+        
         return super(vehicle, self).write(vals)
