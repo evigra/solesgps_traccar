@@ -35,7 +35,7 @@ class vehicle(models.Model):
             print('entra name---------')
         if(vals.has_key('imei')):
             fields_name     ='%suniqueid,' %(fields_name)
-            fields_value    ='%s\'%s\',' $(fields_value,vals["imei"]),
+            fields_value    ='%s\'%s\',' %(fields_value,vals["imei"]),
             print('entra imei----------')
         if(fields_name!= False):
             sql='INSERT INTO tc_devices (%s) VALUES (%s)' %(fields_name,fields_value)
