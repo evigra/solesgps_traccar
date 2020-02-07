@@ -29,11 +29,11 @@ class vehicle(models.Model):
         fields_name =''
         fields_value=''
 
-        if 'name' in vals:
+        if vals.has_key('name'):
             fields_name     ='name,'
             fields_value    ='\'%s\',' %(vals["name"])
             print('entra name---------')
-        if 'imei' in vals:
+        if vals.has_key('imei'):
             fields_name     ='%suniqueid,' %(fields_name)
             fields_value    ='%s\'%s\',' $(fields_value,vals["imei"]),
             print('entra imei----------')
