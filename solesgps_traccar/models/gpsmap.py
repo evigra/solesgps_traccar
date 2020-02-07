@@ -35,7 +35,7 @@ class vehicle(models.Model):
                 fields_value    =fields_value,"'",vals["name"],"',"
             if 'imei' in vals:
                 fields_name     =fields_name,'uniqueid,'
-                fields_value    =fields_value,'\'',vals["uniqueid"],'\','
+                fields_value    =fields_value,'\'',vals["imei"],'\','
             if not(fields_name):
                 sql='INSERT INTO tc_devices (', fields_name ,') VALUES (',fields_value,')'
                 print(sql)                     
