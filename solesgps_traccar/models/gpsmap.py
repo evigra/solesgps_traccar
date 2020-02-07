@@ -36,7 +36,7 @@ class vehicle(models.Model):
             if 'uniqueid' in vals:
                 fields_name =fields_name,"uniqueid,"
                 fields_value=fields_value,"'",vals["uniqueid"],"',"
-            if fields_name:
+            if fields_name!='':
                 sql="INSERT INTO tc_devices (", fields_name ,") VALUES (",fields_value,")"
                 print(sql)                     
                 #nov 18  sep 18 ene 19                 
