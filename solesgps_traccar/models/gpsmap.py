@@ -18,7 +18,7 @@ class vehicle(models.Model):
         return super(vehicle, self).create(vals)
 
     def write(self,vals):
-        print('WRITE LALO=====================================================')        
+        print('WRITE LALO====================')        
 
         #sql="INSERT INTO tc_devices (name,uniqueid,phone,disabled,speed) VALUES ('",vals["name"]"','",vals["uniqueid"],"','",vals["phone"],"','",vals["disabled"],"','",vals["speed"],"')"
         #sql='INSERT INTO tc_devices (name,uniqueid,phone,speed) VALUES ("',vals["name"],'","',vals["uniqueid"],'","',vals["phone"],'","',vals["speed"],'")'
@@ -29,11 +29,11 @@ class vehicle(models.Model):
         fields_name =''
         fields_value=''
 
-        if(vals.has_key('name')):
+        if('name' in vals):
             fields_name     ='name,'
             fields_value    ='\'%s\',' %(vals["name"])
             print('entra name---------')
-        if(vals.has_key('imei')):
+        if('imei' in vals):
             fields_name     ='%suniqueid,' %(fields_name)
             fields_value    ='%s\'%s\',' %(fields_value,vals["imei"]),
             print('entra imei----------')
