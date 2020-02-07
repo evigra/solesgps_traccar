@@ -30,10 +30,10 @@ class vehicle(models.Model):
         fields_value=""
 
         if vals:
-            if vals["name"]:
+            if 'name' in vals:
                 fields_name =fields_name,"name,"
                 fields_value=fields_value,"'",vals["name"],"',"
-            if vals["uniqueid"]:
+            if 'uniqueid' in vals:
                 fields_name =fields_name,"uniqueid,"
                 fields_value=fields_value,"'",vals["uniqueid"],"',"
             if fields_name:
