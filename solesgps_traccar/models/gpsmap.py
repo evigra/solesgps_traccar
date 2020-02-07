@@ -30,14 +30,14 @@ class vehicle(models.Model):
         fields_value=''
 
         if vals:
-            if vals.name:
+            if 'name' in vals:
                 fields_name     =fields_name,'name,'
-                fields_value    =fields_value,"'",vals.name,"',"
-            if vals.imei:
+                fields_value    =fields_value,"'",vals["name"],"',"
+            if 'imei' in vals:
                 fields_name     =fields_name,'uniqueid,'
-                fields_value    =fields_value,'\'',vals.imei,'\','
+                fields_value    =fields_value,'\'',vals["imei"],'\','
             if fields_name!= False:
-                sql='INSERT INTO tc_devices (', fields_name ,') VALUES (',fields_value,')'
+                sql='INSERT INTO tc_devices (%s) VALUES (%s)' %(fields_name,fields_value)
                 print(sql)                     
                 #nov 18  sep 18 ene 19                 
         
