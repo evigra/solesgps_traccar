@@ -31,11 +31,11 @@ class vehicle(models.Model):
 
         if vals:
             if 'name' in vals:
-                fields_name     =fields_name,'name,'
-                fields_value    =fields_value,"'",vals["name"],"',"
+                fields_name     ='name,'
+                fields_value    ='\'%s\',' %(vals["name"])
             if 'imei' in vals:
-                fields_name     =fields_name,'uniqueid,'
-                fields_value    =fields_value,'\'',vals["imei"],'\','
+                fields_name     ='%suniqueid,' %(fields_name)
+                fields_value    ='%s\'%s\',' $(fields_value,vals["imei"]),
             if fields_name!= False:
                 sql='INSERT INTO tc_devices (%s) VALUES (%s)' %(fields_name,fields_value)
                 print(sql)                     
