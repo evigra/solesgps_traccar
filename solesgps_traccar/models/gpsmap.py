@@ -5,8 +5,17 @@ import requests
 import random
 from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models, _
+class tc_devices(models.Model):
+    _name = "tc_devices"
+    _description = 'Traccar devices'
+
+    name            = fields.Char('Name', size=128)
+    uniqueid        = fields.Char('Description', size=128)
+
+    
 class vehicle(models.Model):
     _inherit = "fleet.vehicle"    
+    """
     def create(self,vals):
         print('CREATE LALO====================')        
 
@@ -43,3 +52,4 @@ class vehicle(models.Model):
             #nov 18  sep 18 ene 19                 
         
         return super(vehicle, self).write(vals)
+    """
