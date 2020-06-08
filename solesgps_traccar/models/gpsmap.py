@@ -41,7 +41,7 @@ class vehicle(models.Model):
 
         if('name' in vals):
             fields_name     ="""name,"""
-            fields_value    ="""\'%s\',""" %(vals["name"])
+            fields_value    ="""%s,""" %(vals["name"])
         if('imei' in vals):
             fields_name     ="""%suniqueid,""" %(fields_name)
             fields_value    ="""%s%s,""" %(fields_value,vals["imei"]),
