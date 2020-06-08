@@ -14,6 +14,21 @@ class tc_devices(models.Model):
     name            = fields.Char('Name', size=128)
     uniqueid        = fields.Char('Description', size=128)
 """
+class positions(models.Model):
+    _inherit = "gpsmap.positions"
+
+    def run_scheduler_get_position2(self):
+
+        self.env.cr.execute("""SELECT * FROM tc_position LIMIT 10""")
+
+        for product_data in self.env.cr.dictfetchall():
+            print(product_data)            
+        
+        
+
+
+
+
     
 class vehicle(models.Model):
     _inherit = "fleet.vehicle"    
@@ -51,6 +66,18 @@ class vehicle(models.Model):
         if(fields!= False):
             sql="INSERT INTO tc_devices ({fields}) VALUES({fields_value})"
             print(sql)                     
-            #nov 18  sep 18 ene 19                 
+
+            """
+        self.env.cr.execute(""SELECT product_id, sum(quantity) as product_qty, location_id, lot_id as prod_lot_id, package_id, owner_id as partner_id
+            FROM stock_quant
+            LEFT JOIN product_product
+            ON product_product.id = stock_quant.product_id
+            WHERE %s
+            GROUP BY product_id, location_id, lot_id, package_id, partner_id "" % domain, args)
+
+        for product_data in self.env.cr.dictfetchall():
+            # replace the None the dictionary by False, because falsy values are tested later on
+            for void_field in [item[0] for item in product_data.items() if item[1] is None]:            
+            """
 
             return super(vehicle, self).write(vals)
