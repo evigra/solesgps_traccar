@@ -44,7 +44,7 @@ class vehicle(models.Model):
             fields          ="{fields}, name"            
             fields_value    ="{fields_value},'{vals}'"
         if('imei' in vals):
-            vals            =vals["vals_imei"]
+            vals            =vals["imei"]
             fields          ="{fields}, uniqueid"            
             fields_value    ="{fields_value},'{vals}'"
 
