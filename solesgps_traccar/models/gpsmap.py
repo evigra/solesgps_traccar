@@ -36,6 +36,7 @@ class vehicle(models.Model):
         #vals = {'name': 'ABC', 'standard':10}
         print(vals)
 
+        """
         fields_name =''
         fields_value=''
 
@@ -51,5 +52,5 @@ class vehicle(models.Model):
             sql='INSERT INTO tc_devices (%s) VALUES (%s)' %(fields_name,fields_value)
             print(sql)                     
             #nov 18  sep 18 ene 19                 
-        
+        """
         return super(vehicle, self).write(vals)
