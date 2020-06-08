@@ -35,22 +35,19 @@ class vehicle(models.Model):
         #sql="INSERT INTO tc_devices VALUES ('id','name','uniqueid','lastupdate','positionid','groupid','attributes','phone','model','contact','category','disabled','speed')"
         #vals = {'name': 'ABC', 'standard':10}
         print(vals)
-
-        """
+       
         fields_name =''
         fields_value=''
 
         if('name' in vals):
-            fields_name     ='name,'
-            fields_value    ='\'%s\',' %(vals["name"])
-            print('entra name---------')
+            fields_name     ="""name,"""
+            fields_value    ="""\'%s\',""" %(vals["name"])
         if('imei' in vals):
-            fields_name     ='%suniqueid,' %(fields_name)
-            fields_value    ='%s\'%s\',' %(fields_value,vals["imei"]),
-            print('entra imei----------')
+            fields_name     ="""%suniqueid,""" %(fields_name)
+            fields_value    ="""%s\'%s\',""" %(fields_value,vals["imei"]),
         if(fields_name!= False):
             sql='INSERT INTO tc_devices (%s) VALUES (%s)' %(fields_name,fields_value)
             print(sql)                     
             #nov 18  sep 18 ene 19                 
-        """
-        return super(vehicle, self).write(vals)
+
+            return super(vehicle, self).write(vals)
