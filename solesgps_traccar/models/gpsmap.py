@@ -19,7 +19,7 @@ class positions(models.Model):
 
     def run_scheduler_get_position2(self):
 
-        self.env.cr.execute("""SELECT * FROM tc_position LIMIT 10""")
+        self.env.cr.execute("""SELECT * FROM tc_positions LIMIT 10""")
 
         for product_data in self.env.cr.dictfetchall():
             print(product_data)            
