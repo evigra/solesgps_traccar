@@ -59,7 +59,7 @@ class vehicle(models.Model):
     def write(self,vals):
         print("WRITE ######################")                
         imei                            =self.imei
-        self.env.cr.execute("SELECT * FROM tc_devices WHERE uniqueid='%s'" $(imei))        
+        self.env.cr.execute("SELECT * FROM tc_devices WHERE uniqueid='%s'" %(imei))        
         devices_data                    =self.env.cr.dictfetchall()
         if len(devices_data)>0:         
             for devices in devices_data:
