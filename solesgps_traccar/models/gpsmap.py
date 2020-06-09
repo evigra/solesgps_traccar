@@ -10,10 +10,10 @@ class tc_devices(models.Model):
     _name = "tc_devices"
     _description = 'Traccar devices'
 
-    name            = fields.Char('Name', size=128)
-    uniqueid        = fields.Char('Description', size=128)
+    name                            =fields.Char('Name', size=128)
+    uniqueid                        =fields.Char('Description', size=128)
 
-    def __SAVE(self,vals, method):
+    def __SAVE(self,vals):
         if('imei' in vals):
             vals.uniqueid           =vals["imei"]
             del vals["imei"]                   
@@ -36,32 +36,26 @@ class positions(models.Model):
     
 class vehicle(models.Model):
     _inherit = "fleet.vehicle"    
-    def create(self,vals):
-        tc_devices_obj                  =self.env['tc_devices']        
-        devices                         ={}
 
+    def __SAVE(self,vals):
+        devices                         ={}        
         if('name' in vals):
             devices.name                =vals["name"]
         if('imei' in vals):
             devices.uniqueid            =vals["imei"]
-
-        tc_devices_obj.write(devices)    
+        return devices
+    def create(self,vals):
+        tc_devices_obj                  =self.env['tc_devices']        
+        tc_devices_obj.create.(self.__SAVE(vals))    
 
         return super(vehicle, self).create(vals)
-
     def write(self,vals):
-        tc_devices_obj                           =self.env['tc_devices']        
-        devices_args                            =[('uniqueid','=',self.imei)]                
-        devices_data                            =tc_devices_obj.search(devices_args, offset=0, limit=None, order=None)
+        tc_devices_obj                  =self.env['tc_devices']        
+        devices_args                    =[('uniqueid','=',self.imei)]                
+        devices_data                    =tc_devices_obj.search(devices_args, offset=0, limit=None, order=None)
         if len(devices_data)>0:         
             for devices in devices_data:
-                if('name' in vals):
-                    devices.name                =vals["name"]
-                if('imei' in vals):
-                    devices.uniqueid            =vals["imei"]
-
-                tc_devices_obj.write(devices)    
+                tc_devices_obj.write(self.__SAVE(vals))    
         else:
-            tc_devices_obj.create(devices)
+            tc_devices_obj.create(self.__SAVE(vals))
         return super(vehicle, self).write(vals)
-
