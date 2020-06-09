@@ -53,6 +53,7 @@ class vehicle(models.Model):
         sql                             =self.__SAVE(vals)    
         if(sql!=""):            
             sql="INSERT INTO tc_devices SET %s" %(sql)
+            self.env.cr.execute(sql)
             print(sql)
 
     def create(self,vals):
@@ -60,6 +61,7 @@ class vehicle(models.Model):
         return super(vehicle, self).create(vals)
     def write(self,vals):
         print("WRITE ######################")                
+        print(vals)
         imei                            =self.imei
         self.env.cr.execute("SELECT * FROM tc_devices WHERE uniqueid='%s'" %(imei))        
         devices_data                    =self.env.cr.dictfetchall()
