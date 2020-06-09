@@ -38,6 +38,10 @@ class vehicle(models.Model):
 
     def __SAVE(self,vals):
         opciones                        ={}        
+        opciones["fields"]              =""
+        opciones["values"]              =""
+        opciones["fields_value"]        =""
+
         fields                          =""
         values                          =""
         fields_value                    =""
