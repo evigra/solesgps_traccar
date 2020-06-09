@@ -44,7 +44,7 @@ class vehicle(models.Model):
             sql                         ="%s name='%s'," %(sql, val)
         if('imei' in vals):
             val                         =vals["imei"]
-            sql                         ="%s uniqueid='%s'," %(sql, val)\            
+            sql                         ="%s uniqueid='%s'," %(sql, val)
         if(sql!=""):
             sql                         =sql[ :len(sql)-1]
         return sql
