@@ -39,6 +39,6 @@ class vehicle(models.Model):
         print('WRITE LALO====================')        
 
 
-        print(self)        
+        print(self.id)        
 
         return super(vehicle, self).write(vals)
