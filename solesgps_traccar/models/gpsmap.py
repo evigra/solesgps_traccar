@@ -42,11 +42,11 @@ class vehicle(models.Model):
         values                          =""
         fields_value                    =""
         if('name' in vals):
-            fields                      "%s name," %(fields)             
+            fields                      ="%s name," %(fields)             
             values                      ="%s'%s'," %(values, vals["name"])
             fields_value                ="%s name='%s'," %(fields_value, vals["name"])
         if('imei' in vals):
-            fields                      "%s uniqueid," %(fields)             
+            fields                      ="%s uniqueid," %(fields)             
             values                      ="%s'%s'," %(values, vals["imei"])
             fields_value                ="%s uniqueid='%s'," %(fields_value, vals["imei"])
 
