@@ -41,4 +41,4 @@ class vehicle(models.Model):
 
         print(self)        
 
-            return super(vehicle, self).write(vals)
+        return super(vehicle, self).write(vals)
