@@ -36,8 +36,21 @@ class vehicle(models.Model):
         return super(vehicle, self).create(vals)
 
     def write(self,vals):
-
         print('WRITE LALO====================')        
-        print(self.imei)        
+
+        tc_devices_obj                           =self.env['tc_devices']        
+
+        devices_args                            =[('uniqueid','=',self.imei)]                
+        devices_data                            =tc_devices_obj.search(devices_args, offset=0, limit=None, order=None)
+        if len(devices_data)>0:         
+            for devices in devices_data:
+                print(devices)        
+
+        
+
+
+
+
+
 
         return super(vehicle, self).write(vals)
