@@ -45,7 +45,7 @@ class vehicle(models.Model):
         return devices
     def create(self,vals):
         tc_devices_obj                  =self.env['tc_devices']        
-        tc_devices_obj.create.(self.__SAVE(vals))    
+        tc_devices_obj.create(self.__SAVE(vals))    
 
         return super(vehicle, self).create(vals)
     def write(self,vals):
