@@ -37,10 +37,7 @@ class vehicle(models.Model):
 
     def write(self,vals):
 
-    
         print('WRITE LALO====================')        
-
-        data_anterior   =self.browse([self.id])
-        print(data_anterior)        
+        print(self.imei)        
 
         return super(vehicle, self).write(vals)
