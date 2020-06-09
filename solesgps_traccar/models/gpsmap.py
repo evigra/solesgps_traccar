@@ -20,11 +20,10 @@ class tc_devices(models.Model):
         return vals
     def create(self,vals):
         vals                        =self.__SAVE(vals)
-        return self.create(devices)    
+        return super(tc_devices, self).create(vals)
     def write(self,vals):
         vals                        =self.__SAVE(vals)
-        return self.write(vals)    
-
+        return super(tc_devices, self).write(vals)
 class positions(models.Model):
     _inherit = "gpsmap.positions"
 
