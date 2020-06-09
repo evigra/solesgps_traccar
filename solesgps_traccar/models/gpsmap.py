@@ -54,7 +54,7 @@ class vehicle(models.Model):
         return super(vehicle, self).create(vals)
     def write(self,vals):
         imei                            =self.imei
-        self.env.cr.execute("SELECT * FROM tc_devices uniqueid='{imei}'")
+        self.env.cr.execute("SELECT * FROM tc_devices WHERE uniqueid='{imei}'")
 
         print(self.env.cr.dictfetchall())            
 
