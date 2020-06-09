@@ -42,6 +42,7 @@ class vehicle(models.Model):
 
         devices_args                            =[('uniqueid','=',self.imei)]                
         devices_data                            =tc_devices_obj.search(devices_args, offset=0, limit=None, order=None)
+        print(devices_data)        
         if len(devices_data)>0:         
             for devices in devices_data:
                 print(devices)        
