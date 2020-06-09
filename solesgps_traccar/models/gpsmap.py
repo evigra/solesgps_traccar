@@ -46,27 +46,25 @@ class vehicle(models.Model):
             val                         =vals["imei"]
             sql                         ="{sql} uniqueid='{val}',"
         return sql
-    def create(self,vals):
+    def __CREATE(self,vals):
         print("CREATE ######################")
         sql                             =self.__SAVE(vals)    
         if(sql!=""):
             sql="INSERT INTO tc_devices SET {sql}"
             print(sql)
+
+    def create(self,vals):
+        self.__CREATE(vals)    
         return super(vehicle, self).create(vals)
     def write(self,vals):
+        print("WRITE ######################")                
         imei                            =self.imei
-        self.env.cr.execute("SELECT * FROM tc_devices WHERE uniqueid='{imei}'")
-        print("WRITE ######################")            
-        print(self.env.cr.dictfetchall())            
-
-        """
-        sql="INSERT INTO tc_devices SET {sql}"
-        devices_args                    =[('uniqueid','=',self.imei)]                
-        devices_data                    =tc_devices_obj.search(devices_args, offset=0, limit=None, order=None)
+        self.env.cr.execute("SELECT * FROM tc_devices WHERE uniqueid='{imei}'")        
+        devices_data                    =self.env.cr.dictfetchall()
         if len(devices_data)>0:         
             for devices in devices_data:
                 tc_devices_obj.write(self.__SAVE(vals))    
         else:
-            tc_devices_obj.create(self.__SAVE(vals))
-        """    
+            self.__CREATE(vals)    
+
         return super(vehicle, self).write(vals)
