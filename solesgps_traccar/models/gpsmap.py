@@ -38,18 +38,28 @@ class vehicle(models.Model):
 
     def __SAVE(self,vals):
         devices                         ={}        
+        sql                             =""
         if('name' in vals):
-            devices.name                =vals["name"]
+            val                         =vals["name"]
+            sql                         ="{sql} name='{val}',"
         if('imei' in vals):
-            devices.uniqueid            =vals["imei"]
-        return devices
+            val                         =vals["imei"]
+            sql                         ="{sql} uniqueid='{val}',"
+        return sql
     def create(self,vals):
-        tc_devices_obj                  =self.env['tc_devices']        
-        tc_devices_obj.create(self.__SAVE(vals))    
-
+        sql                             =self.__SAVE(vals)    
+        if(sql!=""):
+            sql="INSERT INTO tc_devices SET {sql}"
+            print(sql)
         return super(vehicle, self).create(vals)
     def write(self,vals):
-        tc_devices_obj                  =self.env['tc_devices']        
+        imei                            =self.imei
+        self.env.cr.execute("SELECT * FROM tc_devices uniqueid='{imei}'")
+
+        print(self.env.cr.dictfetchall())            
+
+        """
+        sql="INSERT INTO tc_devices SET {sql}"
         devices_args                    =[('uniqueid','=',self.imei)]                
         devices_data                    =tc_devices_obj.search(devices_args, offset=0, limit=None, order=None)
         if len(devices_data)>0:         
@@ -57,4 +67,5 @@ class vehicle(models.Model):
                 tc_devices_obj.write(self.__SAVE(vals))    
         else:
             tc_devices_obj.create(self.__SAVE(vals))
+        """    
         return super(vehicle, self).write(vals)
