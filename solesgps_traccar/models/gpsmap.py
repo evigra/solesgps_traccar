@@ -44,12 +44,14 @@ class vehicle(models.Model):
             sql                         ="%s name='%s'," %(sql, val)
         if('imei' in vals):
             val                         =vals["imei"]
-            sql                         ="%s uniqueid='%s'," %(sql, val)
+            sql                         ="%s uniqueid='%s'," %(sql, val)\            
+        if(sql!=""):
+            sql                         =sql[ :len(sql)-1]
         return sql
     def __CREATE(self,vals):
         print("CREATE ######################")
         sql                             =self.__SAVE(vals)    
-        if(sql!=""):
+        if(sql!=""):            
             sql="INSERT INTO tc_devices SET %s" %(sql)
             print(sql)
 
