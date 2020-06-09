@@ -37,22 +37,36 @@ class vehicle(models.Model):
     _inherit = "fleet.vehicle"    
 
     def __SAVE(self,vals):
-        devices                         ={}        
-        sql                             =""
+        opciones                        ={}        
+        fields                          =""
+        values                          =""
+        fields_value                    =""
         if('name' in vals):
-            val                         =vals["name"]
-            sql                         ="%s name='%s'," %(sql, val)
+            fields                      "%s name," %(fields)             
+            values                      ="%s'%s'," %(values, vals["name"])
+            fields_value                ="%s name='%s'," %(fields_value, vals["name"])
         if('imei' in vals):
-            val                         =vals["imei"]
-            sql                         ="%s uniqueid='%s'," %(sql, val)
-        if(sql!=""):
-            sql                         =sql[ :len(sql)-1]
-        return sql
+            fields                      "%s uniqueid," %(fields)             
+            values                      ="%s'%s'," %(values, vals["imei"])
+            fields_value                ="%s uniqueid='%s'," %(fields_value, vals["imei"])
+
+        if(fields!=""):
+            opciones["fields"]          =fields[ :len(fields)-1]      
+            opciones["values"]          =values[ :len(values)-1]      
+            opciones["fields_value"]    =fields_value[ :len(fields_value)-1]      
+        return opciones
     def __CREATE(self,vals):
         print("CREATE ######################")
-        sql                             =self.__SAVE(vals)    
-        if(sql!=""):            
-            sql="INSERT INTO tc_devices SET %s" %(sql)
+        opciones                        =self.__SAVE(vals)    
+        if(opciones["fields"]!=""):            
+            sql="INSERT INTO tc_devices (%s) VALUES(%s)" %(opciones["fields"],opciones["values"])
+            self.env.cr.execute(sql)
+            print(sql)
+    def __WRITE(self,vals):
+        print("WRITE ######################")
+        opciones                        =self.__SAVE(vals)    
+        if(opciones["fields"]!=""):            
+            sql="UPDATE tc_devices SET %s WHERE " %(opciones["fields_value"] )
             self.env.cr.execute(sql)
             print(sql)
 
@@ -67,7 +81,12 @@ class vehicle(models.Model):
         devices_data                    =self.env.cr.dictfetchall()
         if len(devices_data)>0:         
             for devices in devices_data:
-                tc_devices_obj.write(self.__SAVE(vals))    
+                opciones                =self.__SAVE(vals)    
+                opciones["id"]          =self.id
+                print(opciones)
+                print(devices)
+                
+                #tc_devices_obj.write()    
         else:
             self.__CREATE(vals)    
 
