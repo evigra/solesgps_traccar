@@ -45,10 +45,10 @@ class vehicle(models.Model):
         fields                          =""
         values                          =""
         fields_value                    =""
-        if('name' in vals):
+        if('license_plate' in vals):
             fields                      ="%s name," %(fields)             
-            values                      ="%s'%s'," %(values, vals["name"])
-            fields_value                ="%s name='%s'," %(fields_value, vals["name"])
+            values                      ="%s'%s'," %(values, vals["license_plate"])
+            fields_value                ="%s name='%s'," %(fields_value, vals["license_plate"])
         if('imei' in vals):
             fields                      ="%s uniqueid," %(fields)             
             values                      ="%s'%s'," %(values, vals["imei"])
@@ -85,8 +85,6 @@ class vehicle(models.Model):
         devices_data                    =self.env.cr.dictfetchall()
         if len(devices_data)>0:         
             for devices in devices_data:
-            
-            
             
                 #opciones                =self.__SAVE(vals)    
                 #print(opciones)
