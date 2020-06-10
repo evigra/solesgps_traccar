@@ -74,7 +74,6 @@ class vehicle(models.Model):
             sql="UPDATE tc_devices SET %s WHERE id='%s' " %(opciones["fields_value"], opciones["id"] )
             self.env.cr.execute(sql)
             print(sql)
-
     def create(self,vals):
         self.__CREATE(vals)
         return super(vehicle, self).create(vals)
@@ -83,12 +82,11 @@ class vehicle(models.Model):
         imei                            =self.imei
         self.env.cr.execute("SELECT * FROM tc_devices WHERE uniqueid='%s'" %(imei))        
         devices_data                    =self.env.cr.dictfetchall()
-        print(devices_data)
         if len(devices_data)>0:         
             for devices in devices_data:
                 vals2                   =vals
                 vals2["id"]             =devices["id"]
-                self.__CREATE(vals2)
+                self.__WRITE(vals2)
         else:
             self.__CREATE(vals)    
 
