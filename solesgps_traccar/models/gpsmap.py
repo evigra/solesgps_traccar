@@ -86,7 +86,7 @@ class vehicle(models.Model):
         if len(devices_data)>0:         
             for devices in devices_data:
                 vals2                   =vals
-                vals2["id"]             =opciones["id"]
+                vals2["id"]             =devices["id"]
                 self.__CREATE(vals2)
         else:
             self.__CREATE(vals)    
