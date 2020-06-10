@@ -83,6 +83,7 @@ class vehicle(models.Model):
         imei                            =self.imei
         self.env.cr.execute("SELECT * FROM tc_devices WHERE uniqueid='%s'" %(imei))        
         devices_data                    =self.env.cr.dictfetchall()
+        print(devices_data)
         if len(devices_data)>0:         
             for devices in devices_data:
                 vals2                   =vals
