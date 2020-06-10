@@ -70,7 +70,7 @@ class vehicle(models.Model):
         print("WRITE ######################")
         opciones                        =self.__SAVE(vals)    
         if(opciones["fields"]!=""):            
-            sql="UPDATE tc_devices SET %s WHERE " %(opciones["fields_value"] )
+            sql="UPDATE tc_devices SET %s WHERE id " %(opciones["fields_value"], opciones["fields_value"] )
             self.env.cr.execute(sql)
             print(sql)
 
@@ -79,15 +79,17 @@ class vehicle(models.Model):
         return super(vehicle, self).create(vals)
     def write(self,vals):
         print("WRITE ######################")                
-        print(vals)
+        #print(vals)
         imei                            =self.imei
         self.env.cr.execute("SELECT * FROM tc_devices WHERE uniqueid='%s'" %(imei))        
         devices_data                    =self.env.cr.dictfetchall()
         if len(devices_data)>0:         
             for devices in devices_data:
-                opciones                =self.__SAVE(vals)    
-                opciones["id"]          =self.id
-                print(opciones)
+            
+            
+            
+                #opciones                =self.__SAVE(vals)    
+                #print(opciones)
                 print(devices)
                 
                 #tc_devices_obj.write()    
