@@ -27,11 +27,14 @@ class tc_devices(models.Model):
 class positions(models.Model):
     _inherit = "gpsmap.positions"
     
+    """
     def init(self):
-        self.env.cr.execute("""ALTER TABLE IF EXISTS public.tc_positions ADD COLUMN read integer""")
-
+        self.env.cr.execute("ALTER TABLE public.tc_positions ADD COLUMN read integer;")
+        self.env.cr.execute("ALTER TABLE public.tc_positions ALTER COLUMN read SET NOT NULL;")
+        self.env.cr.execute("ALTER TABLE public.tc_positions ALTER COLUMN read SET DEFAULT 0;")
+    #"""
     def run_scheduler_get_position2(self):
-        self.env.cr.execute("""SELECT * FROM tc_positions ORDER BY id DESC""")
+        self.env.cr.execute("SELECT * FROM tc_positions WHERE read=0 ORDER BY id DESC ")
 
         for product_data in self.env.cr.dictfetchall():
             print(product_data)            
