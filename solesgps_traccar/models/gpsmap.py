@@ -27,7 +27,7 @@ class tc_devices(models.Model):
 class positions(models.Model):
     _inherit = "gpsmap.positions"
     
-    def init(self)
+    def init(self):
         self.env.cr.execute("""
         ALTER TABLE tc_positions
         ADD COLUMN IF NOT EXISTS read INT
