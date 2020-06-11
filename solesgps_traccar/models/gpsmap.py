@@ -26,9 +26,15 @@ class tc_devices(models.Model):
         return super(tc_devices, self).write(vals)
 class positions(models.Model):
     _inherit = "gpsmap.positions"
+    
+    def init(self)
+        self.env.cr.execute("""
+        ALTER TABLE tc_positions
+        ADD COLUMN IF NOT EXISTS read INT
+        """)
 
     def run_scheduler_get_position2(self):
-        self.env.cr.execute("""SELECT * FROM tc_positions LIMIT 10""")
+        self.env.cr.execute("""SELECT * FROM tc_positions ORDER BY id DESC""")
 
         for product_data in self.env.cr.dictfetchall():
             print(product_data)            
