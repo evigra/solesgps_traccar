@@ -28,7 +28,7 @@ class positions(models.Model):
     _inherit = "gpsmap.positions"
     
     def init(self):
-        self.env.cr.execute("""ALTER TABLE IF EXISTS tc_positions ADD COLUMN IF NOT EXISTS leer INTEGER""")
+        self.env.cr.execute("""ALTER TABLE IF EXISTS public.tc_positions ADD COLUMN IF NOT EXISTS read integer""")
 
     def run_scheduler_get_position2(self):
         self.env.cr.execute("""SELECT * FROM tc_positions ORDER BY id DESC""")
