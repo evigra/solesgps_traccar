@@ -29,8 +29,8 @@ class positions(models.Model):
     
     def init(self):
         self.env.cr.execute("""
-        ALTER TABLE tc_positions
-        ADD COLUMN IF NOT EXISTS read INT
+        ALTER TABLE tc_positions ADD COLUMN IF NOT EXISTS read INTEGER;
+        
         """)
 
     def run_scheduler_get_position2(self):
