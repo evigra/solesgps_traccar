@@ -66,7 +66,7 @@ class vehicle(models.Model):
                         
             if(datas["method"]=="create"):
                 sql="INSERT INTO tc_devices (%s) VALUES(%s)" %(fields,values)
-            else
+            else:
                 old                     =datas["old"]                 
                 sql="UPDATE tc_devices SET %s WHERE id='%s' " %(fields_value, old["id"] )    
             
