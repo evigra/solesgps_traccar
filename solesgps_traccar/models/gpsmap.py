@@ -34,11 +34,28 @@ class positions(models.Model):
         self.env.cr.execute("ALTER TABLE public.tc_positions ALTER COLUMN read SET DEFAULT 0;")
     #"""
     def run_scheduler_get_position2(self):
-        self.env.cr.execute("SELECT * FROM tc_positions WHERE read=0 ORDER BY id DESC ")
+        self.env.cr.execute("""
+            SELECT tp.protocol,fv.id as deviceid,tp.servertime,tp.devicetime,tp.fixtime,tp.valid,tp.latitude,tp.longitude,
+            tp.altitude,tp.speed,tp.course,tp.address,tp.attributes,tp.other,tp.event
+            FROM tc_positions tp 
+                JOIN tc_devices td ON tp.deviceid=td.id 
+                JOIN fleet_vehicle fv ON fv.imei=td.uniqueid
+            WHERE tp.read=0 
+            ORDER BY tp.id DESC LIMIT 5
+        """)
+        print("##############")
+        devices                     ={}
+        for positions in self.env.cr.dictfetchall():
+            #if('license_plate' in devices):            
+            print(positions)
 
-        for product_data in self.env.cr.dictfetchall():
-            print(product_data)            
-    
+            """
+    attributes                                  = fields.Char('Atributos', size=5000)
+    other                                       = fields.Char('Otros', size=5000)
+    leido                                       = fields.Integer('Leido')
+    event                                       = fields.Char('Evento', size=70)            
+            """            
+                            
 class vehicle(models.Model):
     _inherit = "fleet.vehicle"    
 
@@ -48,8 +65,7 @@ class vehicle(models.Model):
         fields                          =""
         values                          =""
         fields_value                    =""
-        
-        
+                
         if('license_plate' in vals):
             fields                      ="%s name," %(fields)             
             values                      ="%s'%s'," %(values, vals["license_plate"])
