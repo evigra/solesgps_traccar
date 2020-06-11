@@ -36,58 +36,54 @@ class positions(models.Model):
 class vehicle(models.Model):
     _inherit = "fleet.vehicle"    
 
-    def __SAVE(self,vals):
-        opciones                        ={}        
-        opciones["fields"]              =""
-        opciones["values"]              =""
-        opciones["fields_value"]        =""
+    def __SAVE(self,datas):           
+        vals                            =datas["new"]
 
         fields                          =""
         values                          =""
         fields_value                    =""
+        
+        
         if('license_plate' in vals):
             fields                      ="%s name," %(fields)             
             values                      ="%s'%s'," %(values, vals["license_plate"])
             fields_value                ="%s name='%s'," %(fields_value, vals["license_plate"])
-        if('imei' in vals):
+        if('imei' in vals ):
             fields                      ="%s uniqueid," %(fields)             
             values                      ="%s'%s'," %(values, vals["imei"])
             fields_value                ="%s uniqueid='%s'," %(fields_value, vals["imei"])
-        if('id' in vals):
-            opciones["id"]              =vals["id"] 
+
         if(fields!=""):
-            opciones["fields"]          =fields[ :len(fields)-1]      
-            opciones["values"]          =values[ :len(values)-1]      
-            opciones["fields_value"]    =fields_value[ :len(fields_value)-1]      
-        return opciones
-    def __CREATE(self,vals):
-        print("CREATE ######################")
-        opciones                        =self.__SAVE(vals)    
-        if(opciones["fields"]!=""):            
-            sql="INSERT INTO tc_devices (%s) VALUES(%s)" %(opciones["fields"],opciones["values"])
+            fields                      =fields[ :len(fields)-1]      
+            values                      =values[ :len(values)-1]      
+            fields_value                =fields_value[ :len(fields_value)-1]      
+                        
+            if(datas["method"]=="create"):
+                sql="INSERT INTO tc_devices (%s) VALUES(%s)" %(fields,values)
+            else
+                old                     =datas["old"]                 
+                sql="UPDATE tc_devices SET %s WHERE id='%s' " %(fields_value, old["id"] )    
+            
             self.env.cr.execute(sql)
-            print(sql)
-    def __WRITE(self,vals):
-        print("WRITE ######################")
-        opciones                        =self.__SAVE(vals)    
-        if(opciones["fields"]!=""):            
-            sql="UPDATE tc_devices SET %s WHERE id='%s' " %(opciones["fields_value"], opciones["id"] )
-            self.env.cr.execute(sql)
-            print(sql)
+                            
     def create(self,vals):
-        self.__CREATE(vals)
+        datas                   ={}
+        datas["method"]         ="create"
+        datas["new"]            =vals
+        self.__SAVE(datas)
+
         return super(vehicle, self).create(vals)
     def write(self,vals):
-        print("WRITE ######################")                
-        imei                            =self.imei
-        self.env.cr.execute("SELECT * FROM tc_devices WHERE uniqueid='%s'" %(imei))        
-        devices_data                    =self.env.cr.dictfetchall()
-        if len(devices_data)>0:         
-            for devices in devices_data:
-                vals2                   =vals
-                vals2["id"]             =devices["id"]
-                self.__WRITE(vals2)
-        else:
-            self.__CREATE(vals)    
+        datas                   ={}
+        datas["method"]         ="create"
+        datas["new"]            =vals
 
+        self.env.cr.execute("SELECT * FROM tc_devices WHERE uniqueid='%s'" %(self.imei))        
+        devices_data                    =self.env.cr.dictfetchall()
+        if len(devices_data)>0:
+            datas["method"]     ="write"
+            datas["old"]        =devices_data[0]         
+
+        self.__SAVE(datas)
+                        
         return super(vehicle, self).write(vals)
