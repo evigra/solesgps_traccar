@@ -33,7 +33,7 @@ class positions(models.Model):
         self.env.cr.execute("ALTER TABLE public.tc_positions ALTER COLUMN read SET NOT NULL;")
         self.env.cr.execute("ALTER TABLE public.tc_positions ALTER COLUMN read SET DEFAULT 0;")
     #"""
-    def run_scheduler_get_position(self):
+    def run_scheduler_get_position2(self):
         devices                     ={}
         self.env.cr.execute("""
             SELECT tp.protocol,fv.id as deviceid,tp.servertime,tp.devicetime,tp.fixtime,tp.valid,tp.latitude,tp.longitude,
@@ -49,7 +49,6 @@ class positions(models.Model):
         self.env.cr.execute("UPDATE tc_positions SET read=1 WHERE read=0")        
         for position in positions:
             self.create(position)
-        return super(positions, self).run_scheduler_get_position(self)                    
 class vehicle(models.Model):
     _inherit = "fleet.vehicle"    
 
