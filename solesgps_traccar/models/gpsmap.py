@@ -47,12 +47,9 @@ class positions(models.Model):
         positions                   =self.env.cr.dictfetchall()
 
         self.env.cr.execute("""
-            UPDATE tc_positions tp 
-                JOIN tc_devices td ON tp.deviceid=td.id 
-                JOIN fleet_vehicle fv ON fv.imei=td.uniqueid
-            SET tp.read=1    
-            WHERE tp.read=0 
-            ORDER BY tp.id DESC LIMIT 5
+            UPDATE tc_positions SET read=1    
+            WHERE read=0 
+            ORDER BY id DESC LIMIT 5
         """)
         self.env.cr.dictfetchall()
         
