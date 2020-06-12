@@ -45,12 +45,9 @@ class positions(models.Model):
             ORDER BY tp.id DESC LIMIT 5
         """)
         positions                   =self.env.cr.dictfetchall()
-
-        self.env.cr.execute("""
-            UPDATE tc_positions SET read=1    
-            WHERE read=0 
-        """)
-        self.env.cr.dictfetchall()
+        
+        #self.env.cr.execute("UPDATE tc_positions SET read=1 WHERE read=0")
+        #self.env.cr.dictfetchall()
         
         for position in positions:
             self.create(position)
