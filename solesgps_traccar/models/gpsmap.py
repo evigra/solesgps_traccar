@@ -49,7 +49,6 @@ class positions(models.Model):
         self.env.cr.execute("""
             UPDATE tc_positions SET read=1    
             WHERE read=0 
-            ORDER BY id DESC LIMIT 5
         """)
         self.env.cr.dictfetchall()
         
