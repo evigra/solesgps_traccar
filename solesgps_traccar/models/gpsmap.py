@@ -46,21 +46,11 @@ class positions(models.Model):
         """)
         positions                   =self.env.cr.dictfetchall()
         
-        #self.env.cr.execute("UPDATE tc_positions SET read=1 WHERE read=0")
-        #self.env.cr.dictfetchall()
+        self.env.cr.execute("UPDATE tc_positions SET read=1 WHERE read=0")
+        self.env.cr.dictfetchall()
         
         for position in positions:
             self.create(position)
-        
-            #if('license_plate' in devices):            
-            print(positions)
-
-            """
-    attributes                                  = fields.Char('Atributos', size=5000)
-    other                                       = fields.Char('Otros', size=5000)
-    leido                                       = fields.Integer('Leido')
-    event                                       = fields.Char('Evento', size=70)            
-            """            
                             
 class vehicle(models.Model):
     _inherit = "fleet.vehicle"    
