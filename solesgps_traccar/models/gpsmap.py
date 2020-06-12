@@ -49,7 +49,7 @@ class positions(models.Model):
         self.env.cr.execute("UPDATE tc_positions SET read=1 WHERE read=0")        
         for position in positions:
             self.create(position)
-        return super(positions, self).run_scheduler_get_position()                    
+        return super(positions, self).run_scheduler_get_position(self)                    
 class vehicle(models.Model):
     _inherit = "fleet.vehicle"    
 
