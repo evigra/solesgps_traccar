@@ -34,18 +34,31 @@ class positions(models.Model):
         self.env.cr.execute("ALTER TABLE public.tc_positions ALTER COLUMN read SET DEFAULT 0;")
     #"""
     def run_scheduler_get_position2(self):
+        devices                     ={}
         self.env.cr.execute("""
             SELECT tp.protocol,fv.id as deviceid,tp.servertime,tp.devicetime,tp.fixtime,tp.valid,tp.latitude,tp.longitude,
-            tp.altitude,tp.speed,tp.course,tp.address,tp.attributes,tp.other,tp.event
+            tp.altitude,tp.speed,tp.course,tp.address,tp.attributes
             FROM tc_positions tp 
                 JOIN tc_devices td ON tp.deviceid=td.id 
                 JOIN fleet_vehicle fv ON fv.imei=td.uniqueid
             WHERE tp.read=0 
             ORDER BY tp.id DESC LIMIT 5
         """)
-        print("##############")
-        devices                     ={}
-        for positions in self.env.cr.dictfetchall():
+        positions                   =self.env.cr.dictfetchall():
+
+        self.env.cr.execute("""
+            UPDATE tc_positions tp 
+                JOIN tc_devices td ON tp.deviceid=td.id 
+                JOIN fleet_vehicle fv ON fv.imei=td.uniqueid
+            SET tp.read=1    
+            WHERE tp.read=0 
+            ORDER BY tp.id DESC LIMIT 5
+        """)
+        self.env.cr.dictfetchall():
+        
+        for position in positions:
+            self.create(position)
+        
             #if('license_plate' in devices):            
             print(positions)
 
