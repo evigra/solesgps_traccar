@@ -52,7 +52,6 @@ class positions(models.Model):
 class vehicle(models.Model):
     _inherit = "fleet.vehicle"    
 
-    @api.model
     def __SAVE(self,datas):           
         vals                            =datas["new"]
 
@@ -81,7 +80,7 @@ class vehicle(models.Model):
                 sql="UPDATE tc_devices SET %s WHERE id='%s' " %(fields_value, old["id"] )    
             
             self.env.cr.execute(sql)
-    @api.model                        
+               
     def create(self,vals):
         if len(vals)>0:
             datas                   ={}
@@ -90,7 +89,6 @@ class vehicle(models.Model):
             self.__SAVE(datas)
 
         return super(vehicle, self).create(vals)
-    @api.model    
     def write(self,vals):
         if len(vals)>0:
             datas                   ={}
