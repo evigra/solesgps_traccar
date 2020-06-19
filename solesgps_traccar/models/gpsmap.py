@@ -83,23 +83,25 @@ class vehicle(models.Model):
             self.env.cr.execute(sql)
     @api.model                        
     def create(self,vals):
-        datas                   ={}
-        datas["method"]         ="create"
-        datas["new"]            =vals
-        self.__SAVE(datas)
+        if len(vals)>0:
+            datas                   ={}
+            datas["method"]         ="create"
+            datas["new"]            =vals
+            self.__SAVE(datas)
 
         return super(vehicle, self).create(vals)
     @api.model    
     def write(self,vals):
-        datas                   ={}
-        datas["method"]         ="create"
-        datas["new"]            =vals
+        if len(vals)>0:
+            datas                   ={}
+            datas["method"]         ="create"
+            datas["new"]            =vals
 
-        self.env.cr.execute("SELECT * FROM tc_devices WHERE uniqueid='%s'" %(self.imei))        
-        devices_data                    =self.env.cr.dictfetchall()
-        if len(devices_data)>0:
-            datas["method"]     ="write"
-            datas["old"]        =devices_data[0]         
+            self.env.cr.execute("SELECT * FROM tc_devices WHERE uniqueid='%s'" %(self.imei))        
+            devices_data                    =self.env.cr.dictfetchall()
+            if len(devices_data)>0:
+                datas["method"]     ="write"
+                datas["old"]        =devices_data[0]         
 
-        self.__SAVE(datas)                        
+            self.__SAVE(datas)                        
         return super(vehicle, self).write(vals)
