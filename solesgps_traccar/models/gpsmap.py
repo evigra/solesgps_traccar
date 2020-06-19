@@ -87,8 +87,7 @@ class vehicle(models.Model):
         datas["new"]            =vals
         self.__SAVE(datas)
 
-        return super(vehicle, self).create(vals)
-    @api.model    
+        return super(vehicle, self).create(vals)    
     def write(self,vals):
         datas                   ={}
         datas["method"]         ="create"
