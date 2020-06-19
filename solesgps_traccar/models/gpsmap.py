@@ -80,7 +80,7 @@ class vehicle(models.Model):
                 sql="UPDATE tc_devices SET %s WHERE id='%s' " %(fields_value, old["id"] )    
             
             self.env.cr.execute(sql)
-                            
+    @api.model                        
     def create(self,vals):
         datas                   ={}
         datas["method"]         ="create"
@@ -88,6 +88,7 @@ class vehicle(models.Model):
         self.__SAVE(datas)
 
         return super(vehicle, self).create(vals)
+    @api.model    
     def write(self,vals):
         datas                   ={}
         datas["method"]         ="create"
@@ -99,6 +100,5 @@ class vehicle(models.Model):
             datas["method"]     ="write"
             datas["old"]        =devices_data[0]         
 
-        self.__SAVE(datas)
-                        
+        self.__SAVE(datas)                        
         return super(vehicle, self).write(vals)
