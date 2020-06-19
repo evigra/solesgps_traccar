@@ -52,6 +52,7 @@ class positions(models.Model):
 class vehicle(models.Model):
     _inherit = "fleet.vehicle"    
 
+    @api.model
     def __SAVE(self,datas):           
         vals                            =datas["new"]
 
@@ -87,7 +88,8 @@ class vehicle(models.Model):
         datas["new"]            =vals
         self.__SAVE(datas)
 
-        return super(vehicle, self).create(vals)    
+        return super(vehicle, self).create(vals)
+        
     def write(self,vals):
         datas                   ={}
         datas["method"]         ="create"
