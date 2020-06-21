@@ -49,7 +49,7 @@ class positions(models.Model):
                 tp.altitude,tp.speed,tp.course,tp.address,tp.attributes
             FROM tc_positions tp 
                 JOIN tc_devices td ON tp.deviceid=td.id 
-                JOIN fleet_vehicle fv ON* fv.imei=td.uniqueid
+                JOIN fleet_vehicle fv ON fv.imei=td.uniqueid
                 LEFT JOIN tc_events te ON te.deviceid=td.id AND te.positionid=tp.id
             WHERE tp.read=0 
             ORDER BY tp.devicetime DESC 
