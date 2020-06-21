@@ -36,13 +36,23 @@ class positions(models.Model):
     def run_scheduler_get_position2(self):
         devices                     ={}
         self.env.cr.execute("""
-            SELECT tp.protocol,fv.id as deviceid,tp.servertime,tp.devicetime,tp.fixtime,tp.valid,tp.latitude,tp.longitude,
-            tp.altitude,tp.speed,tp.course,tp.address,tp.attributes
+            SELECT 
+	            CASE 
+				            
+		            WHEN tp.attributes::json->>'alarm'!='' THEN 'alarm'
+		            WHEN tp.attributes::json->>'motion'='false' THEN 'deviceStopped'
+		            WHEN tp.attributes::json->>'motion'='true' THEN 'deviceOnline'
+		            ELSE te.type
+	            END	
+                as event,            
+                tp.protocol,fv.id as deviceid,tp.servertime,tp.devicetime,tp.fixtime,tp.valid,tp.latitude,tp.longitude,
+                tp.altitude,tp.speed,tp.course,tp.address,tp.attributes
             FROM tc_positions tp 
                 JOIN tc_devices td ON tp.deviceid=td.id 
-                JOIN fleet_vehicle fv ON fv.imei=td.uniqueid
+                JOIN fleet_vehicle fv ON* fv.imei=td.uniqueid
+                LEFT JOIN tc_events te ON te.deviceid=td.id AND te.positionid=tp.id
             WHERE tp.read=0 
-            ORDER BY tp.id DESC LIMIT 5
+            ORDER BY tp.devicetime DESC 
         """)
         positions                   =self.env.cr.dictfetchall()
         
