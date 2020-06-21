@@ -44,7 +44,7 @@ class positions(models.Model):
 		            WHEN tp.attributes::json->>'motion'='true' THEN 'deviceOnline'
 		            ELSE te.type
 	            END	
-                as event,            
+                as status,            
                 tp.protocol,fv.id as deviceid,tp.servertime,tp.devicetime,tp.fixtime,tp.valid,tp.latitude,tp.longitude,
                 tp.altitude,tp.speed,tp.course,tp.address,tp.attributes
             FROM tc_positions tp 
