@@ -37,8 +37,7 @@ class positions(models.Model):
         devices                     ={}
         self.env.cr.execute("""
             SELECT 
-	            CASE 
-				            
+	            CASE 				            
 		            WHEN tp.attributes::json->>'alarm'!='' THEN 'alarm'
 		            WHEN tp.attributes::json->>'motion'='false' THEN 'deviceStopped'
 		            WHEN tp.attributes::json->>'motion'='true' THEN 'deviceOnline'
