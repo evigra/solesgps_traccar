@@ -27,7 +27,7 @@ class tc_devices(models.Model):
 class positions(models.Model):
     _inherit = "gpsmap.positions"
     
-    #"""
+    """
     def init(self):
         self.env.cr.execute("ALTER TABLE public.tc_positions ADD COLUMN read integer;")
         self.env.cr.execute("ALTER TABLE public.tc_positions ALTER COLUMN read SET NOT NULL;")
