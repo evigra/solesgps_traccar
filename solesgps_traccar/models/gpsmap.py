@@ -61,6 +61,7 @@ class positions(models.Model):
 		            WHEN tp.attributes::json->>'alarm'!='' THEN 'alarm'
 		            WHEN tp.attributes::json->>'motion'='false' THEN 'deviceStopped'
 		            WHEN tp.attributes::json->>'motion'='true' THEN 'deviceOnline'
+		            ELSE 'deviceOnline'
 	            END	
                 as status,            
                 tp.protocol,fv.id as deviceid,tp.servertime,tp.devicetime,tp.fixtime,tp.valid,tp.latitude,tp.longitude,
@@ -74,8 +75,7 @@ class positions(models.Model):
         positions                   =self.env.cr.dictfetchall()
         
         self.env.cr.execute("UPDATE tc_positions SET read=1 WHERE read=0")        
-        for position in positions:
-            
+        for position in positions:            
             self.create(position)
 class vehicle(models.Model):
     _inherit = "fleet.vehicle"    
